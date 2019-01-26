@@ -31,6 +31,8 @@ public class TouchCharacterController : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     touchStartPos = touch.position;
+
+                    trajectoryObject.GetComponent<TrajectoryPrediction>().ResetDots();
                 }
 
                 if (touch.phase == TouchPhase.Moved)
@@ -38,6 +40,7 @@ public class TouchCharacterController : MonoBehaviour
                     velocity = ((touchStartPos - touch.position) * forceScalar);
 
                     trajectoryObject.GetComponent<TrajectoryPrediction>().UpdateVel(velocity);
+                    trajectoryObject.GetComponent<TrajectoryPrediction>().predict = true;
                 }
 
                 if (touch.phase == TouchPhase.Ended)
@@ -72,13 +75,12 @@ public class TouchCharacterController : MonoBehaviour
 
     public void ResetCharacter()
     {
-        Debug.Log("Hey");
-
         velocity = Vector2.zero;
         launched = false;
-        this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
         transform.position = startPos;
-        trajectoryObject.GetComponent<TrajectoryPrediction>().Reset();
+        transform.rotation = Quaternion.identity;
+        trajectoryObject.GetComponent<TrajectoryPrediction>().ResetDots();
+        this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
         this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         this.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         this.gameObject.GetComponent<TrailRenderer>().Clear();

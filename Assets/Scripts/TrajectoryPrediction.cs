@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrajectoryPrediction : MonoBehaviour
 {
     public float timeBetweenDrops = 0.5f;
+    public bool predict = false;
     public GameObject trajectoryPrefab;
     public GameObject TempObjectStorage;
 
@@ -33,23 +34,28 @@ public class TrajectoryPrediction : MonoBehaviour
         { 
             dropTimer += Time.deltaTime;
 
-            if(dotsDropped >= trajectoryDots.Length)
+            Debug.Log(predict);
+
+            if (predict)
             {
-                ClearDots();
-                transform.position = startPos;
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                GetComponent<Rigidbody2D>().AddForce(curVel);
-                dotsDropped = 0;
-            }
+                if (dotsDropped >= trajectoryDots.Length)
+                {
+                    ClearDots();
+                    transform.position = startPos;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    GetComponent<Rigidbody2D>().AddForce(curVel);
+                    dotsDropped = 0;
+                }
 
-            if (dropTimer > timeBetweenDrops)
-            {
-                trajectoryDots[dotsDropped].transform.position = transform.position;
-                trajectoryDots[dotsDropped].SetActive(true);
+                if (dropTimer > timeBetweenDrops)
+                {
+                    trajectoryDots[dotsDropped].transform.position = transform.position;
+                    trajectoryDots[dotsDropped].SetActive(true);
 
-                dropTimer = 0;
+                    dropTimer = 0;
 
-                dotsDropped++;
+                    dotsDropped++;
+                }
             }
         }
     }
@@ -59,7 +65,10 @@ public class TrajectoryPrediction : MonoBehaviour
         for(int i = 0; i < trajectoryDots.Length; i++)
         {
             trajectoryDots[i].SetActive(false);
+            trajectoryDots[i].transform.position = transform.position;
         }
+
+        dotsDropped = 0;
     }
 
     public void UpdateVel(Vector2 vel)
@@ -67,10 +76,13 @@ public class TrajectoryPrediction : MonoBehaviour
         curVel = vel;
     }
 
-    public void Reset()
+    public void ResetDots()
     {
+        ClearDots();
+        predict = false;
+        transform.position = startPos;
         enabled = true;
         curVel = Vector2.zero;
-        ClearDots();
+        dropTimer = 0;
     }
 }
