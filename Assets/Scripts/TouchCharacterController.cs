@@ -43,4 +43,15 @@ public class TouchCharacterController : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Hey asswad");
+
+
+        if (collision.gameObject.CompareTag("Collectable"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+    }
 }
