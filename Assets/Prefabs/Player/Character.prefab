@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4238363746214944145}
   m_Layer: 0
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceScalar: 2
-  ballObject: {fileID: 4238363746913013783}
+  trajectoryObject: {fileID: 4238363746913013783}
 --- !u!58 &4238363746214944144
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -66,4 +66,11 @@ public class TrajectoryPrediction : MonoBehaviour
     {
         curVel = vel;
     }
+
+    public void Reset()
+    {
+        enabled = true;
+        curVel = Vector2.zero;
+        ClearDots();
+    }
 }
