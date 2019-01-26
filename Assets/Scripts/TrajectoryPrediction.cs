@@ -29,25 +29,28 @@ public class TrajectoryPrediction : MonoBehaviour
 
     void Update()
     {
-        dropTimer += Time.deltaTime;
+        if(this.gameObject.activeSelf)
+        { 
+            dropTimer += Time.deltaTime;
 
-        if(dotsDropped >= trajectoryDots.Length)
-        {
-            ClearDots();
-            transform.position = startPos;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().AddForce(curVel);
-            dotsDropped = 0;
-        }
+            if(dotsDropped >= trajectoryDots.Length)
+            {
+                ClearDots();
+                transform.position = startPos;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                GetComponent<Rigidbody2D>().AddForce(curVel);
+                dotsDropped = 0;
+            }
 
-        if (dropTimer > timeBetweenDrops)
-        {
-            trajectoryDots[dotsDropped].transform.position = transform.position;
-            trajectoryDots[dotsDropped].SetActive(true);
+            if (dropTimer > timeBetweenDrops)
+            {
+                trajectoryDots[dotsDropped].transform.position = transform.position;
+                trajectoryDots[dotsDropped].SetActive(true);
 
-            dropTimer = 0;
+                dropTimer = 0;
 
-            dotsDropped++;
+                dotsDropped++;
+            }
         }
     }
 

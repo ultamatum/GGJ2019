@@ -8,8 +8,6 @@ public class CameraController : MonoBehaviour
     
     void LateUpdate()
     {
-        Debug.Log(Camera.main.WorldToScreenPoint(player.transform.position).x);
-
         if(Camera.main.WorldToScreenPoint(player.transform.position).x >= Screen.width / 2)
         {
             transform.position = new Vector3((player.transform.position.x), transform.position.y, transform.position.z);
