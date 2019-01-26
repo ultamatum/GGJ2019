@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TouchCharacterController : MonoBehaviour
 {
+    public float forceScalar = 1;
+
     Vector2 startPos;
     Vector2 endPos;
     Vector2 dir;
@@ -30,7 +32,7 @@ public class TouchCharacterController : MonoBehaviour
 
                 dir = startPos - endPos;
 
-                this.GetComponent<Rigidbody2D>().AddForce(dir);
+                this.GetComponent<Rigidbody2D>().AddForce(dir * forceScalar);
 
                 Debug.Log(dir);
             }
