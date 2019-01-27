@@ -5,6 +5,7 @@ using UnityEngine;
 public class TouchCharacterController : MonoBehaviour
 {
     public float forceScalar = 1;
+    public float minVel = 10;
     public GameObject trajectoryObject;
 
     Vector2 startPos;
@@ -40,18 +41,20 @@ public class TouchCharacterController : MonoBehaviour
                     velocity = ((touchStartPos - touch.position) * forceScalar);
 
                     trajectoryObject.GetComponent<TrajectoryPrediction>().UpdateVel(velocity);
-                    trajectoryObject.GetComponent<TrajectoryPrediction>().predict = true;
                 }
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    GetComponent<Rigidbody2D>().AddForce(velocity);
+                    if (velocity.magnitude >= minVel)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(velocity);
 
-                    trajectoryObject.SetActive(false);
-                    trajectoryObject.GetComponent<TrajectoryPrediction>().ClearDots();
-                    GetComponent<CircleCollider2D>().enabled = true;
+                        trajectoryObject.SetActive(false);
+                        trajectoryObject.GetComponent<TrajectoryPrediction>().ClearDots();
+                        GetComponent<CircleCollider2D>().enabled = true;
 
-                    launched = true;
+                        launched = true;
+                    }
                 }
             }
         }

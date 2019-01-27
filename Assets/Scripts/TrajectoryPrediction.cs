@@ -5,7 +5,6 @@ using UnityEngine;
 public class TrajectoryPrediction : MonoBehaviour
 {
     public float timeBetweenDrops = 0.5f;
-    public bool predict = false;
     public GameObject trajectoryPrefab;
     public GameObject TempObjectStorage;
 
@@ -30,32 +29,26 @@ public class TrajectoryPrediction : MonoBehaviour
 
     void Update()
     {
-        if(this.gameObject.activeSelf)
-        { 
+        if (this.gameObject.activeSelf && curVel.magnitude >= 50)
+        {
             dropTimer += Time.deltaTime;
-
-            Debug.Log(predict);
-
-            if (predict)
+            if (dotsDropped >= trajectoryDots.Length)
             {
-                if (dotsDropped >= trajectoryDots.Length)
-                {
-                    ClearDots();
-                    transform.position = startPos;
-                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    GetComponent<Rigidbody2D>().AddForce(curVel);
-                    dotsDropped = 0;
-                }
+                ClearDots();
+                transform.position = startPos;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                GetComponent<Rigidbody2D>().AddForce(curVel);
+                dotsDropped = 0;
+            }
 
-                if (dropTimer > timeBetweenDrops)
-                {
-                    trajectoryDots[dotsDropped].transform.position = transform.position;
-                    trajectoryDots[dotsDropped].SetActive(true);
+            if (dropTimer > timeBetweenDrops)
+            {
+                trajectoryDots[dotsDropped].transform.position = transform.position;
+                trajectoryDots[dotsDropped].SetActive(true);
 
-                    dropTimer = 0;
+                dropTimer = 0;
 
-                    dotsDropped++;
-                }
+                dotsDropped++;
             }
         }
     }
@@ -79,7 +72,6 @@ public class TrajectoryPrediction : MonoBehaviour
     public void ResetDots()
     {
         ClearDots();
-        predict = false;
         transform.position = startPos;
         enabled = true;
         curVel = Vector2.zero;
