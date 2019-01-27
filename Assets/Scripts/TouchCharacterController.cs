@@ -71,6 +71,11 @@ public class TouchCharacterController : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
         }
+
+        if(collision.gameObject.CompareTag("Goal"))
+        {
+            GameObject.FindGameObjectWithTag("Level Manager").GetComponent<LevelManager>().levelComplete = true;
+        }
     }
 
     public void ResetCharacter()
