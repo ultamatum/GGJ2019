@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public GameObject completedUI;
     public GameObject optionButtons;
     public GameObject gemDisplay;
+    public GameObject gemContainer;
     public GameObject pausedUI;
 
     public GameObject[] gems = new GameObject[3];
@@ -18,6 +19,8 @@ public class LevelManager : MonoBehaviour
 
     public bool levelComplete = false;
     public bool paused = false;
+
+    public string nextLevelName;
 
     private void Update()
     {
@@ -31,10 +34,10 @@ public class LevelManager : MonoBehaviour
 
         if(levelComplete == true)
         {
-            player.GetComponent<Collider2D>().enabled = false;
             completedUI.SetActive(true);
             optionButtons.SetActive(false);
             gemDisplay.SetActive(false);
+            gemContainer.SetActive(false);
         }
     }
 
@@ -47,6 +50,7 @@ public class LevelManager : MonoBehaviour
         completedUI.SetActive(false);
         optionButtons.SetActive(true);
         gemDisplay.SetActive(true);
+        gemContainer.SetActive(true);
 
         for (int i = 0; i < completedGems.Length; i++)
         {
@@ -69,5 +73,10 @@ public class LevelManager : MonoBehaviour
     public void QuitLevel()
     {
         SceneManager.LoadSceneAsync(0);
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(nextLevelName);
     }
 }

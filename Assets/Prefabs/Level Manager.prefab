@@ -50,6 +50,7 @@ MonoBehaviour:
   completedUI: {fileID: 0}
   optionButtons: {fileID: 0}
   gemDisplay: {fileID: 0}
+  gemContainer: {fileID: 0}
   pausedUI: {fileID: 0}
   gems:
   - {fileID: 0}
